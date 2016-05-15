@@ -1,5 +1,5 @@
 #include "GPSWaypoint.h"
-#include <LStorage\LStorage.h>
+#include <LStorage.h>
 
 static unsigned char getComma(unsigned char num, const char *str);
 static double getDoubleNumber(const char *s);

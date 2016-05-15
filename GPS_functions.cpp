@@ -2,9 +2,9 @@
 #include "GPS_functions.h"
 #include "GPSWaypoint.h"
 
-#include <LStorage\LFlash.h> 
-#include <LStorage\LSD.h>
-#include <LStorage\LStorage.h>
+#include <LFlash.h> 
+#include <LSD.h>
+#include <LStorage.h>
 
 gpsSentenceInfoStruct g_info;
 
@@ -72,21 +72,21 @@ void parseGPGGA(const char* GPGGAstr, GPSWaypoint* wayPoint){
 		tmp = getComma(2, GPGGAstr);
 		latitudetmp = getFloatNumber(&GPGGAstr[tmp]);
 
-        tmp = getComma(3, GPGGAstr);
-        //char* n_or_s = getCharString(&GPGGAstr[tmp]);
-        Serial.print("Temp:");
-        Serial.println(tmp);
-        char n_or_s = GPGGAstr[tmp];
-        Serial.print("North or South ");
-        Serial.println(n_or_s);
-
-		tmp = getComma(4, GPGGAstr);
-		longitudetmp = getFloatNumber(&GPGGAstr[tmp]);
-
-        tmp = getComma(5, GPGGAstr);
-        char e_or_w = GPGGAstr[tmp];
-        Serial.print("East or West ");
-		Serial.println(e_or_w);
+    tmp = getComma(3, GPGGAstr);
+    //char* n_or_s = getCharString(&GPGGAstr[tmp]);
+    Serial.print("Temp:");
+    Serial.println(tmp);
+    char n_or_s = GPGGAstr[tmp];
+    Serial.print("North or South ");
+    Serial.println(n_or_s);
+    
+    tmp = getComma(4, GPGGAstr);
+    longitudetmp = getFloatNumber(&GPGGAstr[tmp]);
+    
+    tmp = getComma(5, GPGGAstr);
+    char e_or_w = GPGGAstr[tmp];
+    Serial.print("East or West ");
+    Serial.println(e_or_w);
 		
 		// need to convert format
 		convertCoords(latitudetmp, longitudetmp, &n_or_s, &e_or_w, wayPoint->latitude, wayPoint->longitude);
@@ -178,31 +178,31 @@ boolean printGPGGA(char* str, char* GPS_formatted, GPSWaypoint* wayPoint)
 	  }*/
 
     // GPS fix
- 
+    
     
     
     const int coord_size = 8;
     char lat_fixed[coord_size],lon_fixed[coord_size];
-
-	float fLatitude = getFloatNumber(latitude);
-	float fLongitude = getFloatNumber(longitude);
-	Serial.println("float numbers");
-	float fLatitude_fixed;
-	float fLongitude_fixed;
-
+    
+    float fLatitude = getFloatNumber(latitude);
+    float fLongitude = getFloatNumber(longitude);
+    Serial.println("float numbers");
+    float fLatitude_fixed;
+    float fLongitude_fixed;
+    
     convertCoords(fLatitude, fLongitude, lat_direction, lon_direction, fLatitude_fixed, fLongitude_fixed);
-
-	Serial.println("converted float numbers");
+    
+    Serial.println("converted float numbers");
     //convertCoords(latitude,longitude,lat_fixed, lon_fixed,coord_size);
     
-
-	wayPoint->latitude = fLatitude_fixed;
-	wayPoint->longitude = fLongitude_fixed;
-	
+    
+    wayPoint->latitude = fLatitude_fixed;
+    wayPoint->longitude = fLongitude_fixed;
+    
     Serial.print("Latitude:");
-  //  Serial.println(lat_fixed);
-	Serial.println(wayPoint->latitude);
-
+    //  Serial.println(lat_fixed);
+    Serial.println(wayPoint->latitude);
+    
     Serial.println(lat_direction);
     //strcat(SMScontent, "\nLatitude: ");
     //strcat(SMScontent,lat_fixed);
@@ -210,9 +210,9 @@ boolean printGPGGA(char* str, char* GPS_formatted, GPSWaypoint* wayPoint)
     
     Serial.print("Longitude:");
     //Serial.println(lon_fixed);
-	Serial.println(wayPoint->longitude);
+    Serial.println(wayPoint->longitude);
     Serial.println(lon_direction);
-   
+    
     return true;
   }
   else
